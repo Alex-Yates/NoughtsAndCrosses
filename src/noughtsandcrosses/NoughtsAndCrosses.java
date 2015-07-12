@@ -17,27 +17,27 @@ public class NoughtsAndCrosses {
     /**
      *
      */
-    static boolean turn = true;
+    static String currentPlayer = "O";
     static List grid = new ArrayList();
 
     public static void main(String[] args) {
         initialiseGrid();
-        for (int turn = 0; turn < 9; turn++) {
+        while (!wonByCurrentPlayer()) {
+            nextPlayer();
             takeTurn();
             printGrid();
-            nextPlayer();
         }
     }
 
-    public static boolean turnIsTrue() {
-        return (turn == true);
+    public static boolean turnIsX() {
+        return (currentPlayer.equals("X"));
     }
 
     public static void nextPlayer() {
-        if (turnIsTrue()) {
-            turn = false;
+        if (turnIsX()) {
+            currentPlayer = "O";
         } else {
-            turn = true;
+            currentPlayer = "X";
         }
     }
 
@@ -55,6 +55,21 @@ public class NoughtsAndCrosses {
         System.out.println(" " + grid.get(6) + " | " + grid.get(7) + " | " + grid.get(8) + " ");
     }
 
+    public static boolean wonByCurrentPlayer() {
+        if (grid.get(0).equals(grid.get(1)) && grid.get(1).equals(grid.get(2)) && grid.get(0).equals(currentPlayer)
+                || grid.get(3).equals(grid.get(4)) && grid.get(4).equals(grid.get(5)) && grid.get(3).equals(currentPlayer)
+                || grid.get(6).equals(grid.get(7)) && grid.get(7).equals(grid.get(8)) && grid.get(6).equals(currentPlayer)
+                || grid.get(0).equals(grid.get(3)) && grid.get(3).equals(grid.get(6)) && grid.get(0).equals(currentPlayer)
+                || grid.get(1).equals(grid.get(4)) && grid.get(4).equals(grid.get(7)) && grid.get(1).equals(currentPlayer)
+                || grid.get(2).equals(grid.get(5)) && grid.get(5).equals(grid.get(8)) && grid.get(2).equals(currentPlayer)
+                || grid.get(0).equals(grid.get(4)) && grid.get(4).equals(grid.get(8)) && grid.get(0).equals(currentPlayer)
+                || grid.get(2).equals(grid.get(4)) && grid.get(4).equals(grid.get(6)) && grid.get(2).equals(currentPlayer)) {
+            System.out.println("The winner is " + currentPlayer);
+            return true;
+        }
+        return false;
+    }
+
     public static void takeTurn() {
         int move;
         boolean legalMove = false;
@@ -64,7 +79,7 @@ public class NoughtsAndCrosses {
         try {
             while (legalMove == false) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                if (turnIsTrue()) {
+                if (turnIsX()) {
                     System.out.println("Crosses turn next:");
                 } else {
                     System.out.println("Noughts turn next:");
@@ -85,14 +100,15 @@ public class NoughtsAndCrosses {
                         || str.equals("3") || str.equals("4") || str.equals("5")
                         || str.equals("6") || str.equals("7") || str.equals("8")) {
                     move = Integer.parseInt(str);
-                    if (turnIsTrue()) {
-                        grid.set(move, "X");
+                    if (grid.get(move).equals(" ")) {
+                        grid.set(move, currentPlayer);
+                        legalMove = true;
                     } else {
-                        grid.set(move, "O");
+                        System.out.println("The space must be free!");
                     }
-                    legalMove = true;
                 } else {
                     System.out.println("You must enter an integer between 0-8.");
+
                 }
             }
         } catch (IOException e) {
