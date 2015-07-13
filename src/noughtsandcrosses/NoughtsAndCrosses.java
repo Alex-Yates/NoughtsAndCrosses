@@ -55,23 +55,55 @@ public class NoughtsAndCrosses {
         System.out.println(" " + grid.get(6) + " | " + grid.get(7) + " | " + grid.get(8) + " ");
     }
 
-    public static boolean wonByCurrentPlayer() {
-        if (grid.get(0).equals(grid.get(1)) && grid.get(1).equals(grid.get(2)) && !grid.get(0).equals(" ")
-                || grid.get(3).equals(grid.get(4)) && grid.get(4).equals(grid.get(5)) && !grid.get(3).equals(" ")
-                || grid.get(6).equals(grid.get(7)) && grid.get(7).equals(grid.get(8)) && !grid.get(6).equals(" ")
-                || grid.get(0).equals(grid.get(3)) && grid.get(3).equals(grid.get(6)) && !grid.get(0).equals(" ")
-                || grid.get(1).equals(grid.get(4)) && grid.get(4).equals(grid.get(7)) && !grid.get(1).equals(" ")
-                || grid.get(2).equals(grid.get(5)) && grid.get(5).equals(grid.get(8)) && !grid.get(2).equals(" ")
-                || grid.get(0).equals(grid.get(4)) && grid.get(4).equals(grid.get(8)) && !grid.get(0).equals(" ")
-                || grid.get(2).equals(grid.get(4)) && grid.get(4).equals(grid.get(6)) && !grid.get(2).equals(" ")) {
-            System.out.println("Game over!");
-            return true;
+    public static boolean isWon() {
+        boolean gameIsWon = false;
+        String winner;
+        
+        //Determining if victory conditions are met
+        if (grid.get(0).equals(grid.get(1)) && grid.get(1).equals(grid.get(2)) && !grid.get(0).equals(" ")){
+            gameIsWon = true;
+            winner = grid.get(0);
         }
-        return false;
+        else if (grid.get(3).equals(grid.get(4)) && grid.get(4).equals(grid.get(5)) && !grid.get(3).equals(" ")){
+            gameIsWon = true;
+            winner = grid.get(3);
+        }
+        else if (grid.get(6).equals(grid.get(7)) && grid.get(7).equals(grid.get(8)) && !grid.get(6).equals(" ")){
+            gameIsWon = true;
+            winner = grid.get(6);
+        }
+        else if (grid.get(0).equals(grid.get(3)) && grid.get(3).equals(grid.get(6)) && !grid.get(0).equals(" ")){
+            gameIsWon = true;
+            winner = grid.get(0);
+        }
+        else if (grid.get(1).equals(grid.get(4)) && grid.get(4).equals(grid.get(7)) && !grid.get(1).equals(" ")){
+            gameIsWon = true;
+            winner = grid.get(1);
+        }
+        else if (grid.get(2).equals(grid.get(5)) && grid.get(5).equals(grid.get(8)) && !grid.get(2).equals(" ")){
+            gameIsWon = true;
+            winner = grid.get(2);
+        }
+        else if (grid.get(0).equals(grid.get(4)) && grid.get(4).equals(grid.get(8)) && !grid.get(0).equals(" ")){
+            gameIsWon = true;
+            winner = grid.get(0);
+        }
+        else if (grid.get(2).equals(grid.get(4)) && grid.get(4).equals(grid.get(6)) && !grid.get(2).equals(" ")){
+            gameIsWon = true;
+            winner = grid.get(0);
+        }
+        
+        // Logging the winner 
+        if (gameIsWon){
+            System.out.println("Game over! " + winner + "'s win!");
+        }
+        
+        // Signalling whether the game is over
+        return gameIsWon;
     }
     
     public static boolean isDraw(){
-        if (!wonByCurrentPlayer() && !grid.contains(" ")){
+        if (!isWon() && !grid.contains(" ")){
             System.out.println("It's a draw!");
             return true;    
         }
@@ -79,7 +111,7 @@ public class NoughtsAndCrosses {
     }
     
     public static boolean gameEnd(){
-        return (wonByCurrentPlayer() || isDraw());
+        return (isWon() || isDraw());
     }
 
     public static void takeTurn() {
