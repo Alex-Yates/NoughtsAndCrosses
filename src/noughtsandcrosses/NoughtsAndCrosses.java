@@ -22,7 +22,7 @@ public class NoughtsAndCrosses {
 
     public static void main(String[] args) {
         initialiseGrid();
-        while (!wonByCurrentPlayer()) {
+        while (!gameEnd()) {
             nextPlayer();
             takeTurn();
             printGrid();
@@ -56,18 +56,30 @@ public class NoughtsAndCrosses {
     }
 
     public static boolean wonByCurrentPlayer() {
-        if (grid.get(0).equals(grid.get(1)) && grid.get(1).equals(grid.get(2)) && grid.get(0).equals(currentPlayer)
-                || grid.get(3).equals(grid.get(4)) && grid.get(4).equals(grid.get(5)) && grid.get(3).equals(currentPlayer)
-                || grid.get(6).equals(grid.get(7)) && grid.get(7).equals(grid.get(8)) && grid.get(6).equals(currentPlayer)
-                || grid.get(0).equals(grid.get(3)) && grid.get(3).equals(grid.get(6)) && grid.get(0).equals(currentPlayer)
-                || grid.get(1).equals(grid.get(4)) && grid.get(4).equals(grid.get(7)) && grid.get(1).equals(currentPlayer)
-                || grid.get(2).equals(grid.get(5)) && grid.get(5).equals(grid.get(8)) && grid.get(2).equals(currentPlayer)
-                || grid.get(0).equals(grid.get(4)) && grid.get(4).equals(grid.get(8)) && grid.get(0).equals(currentPlayer)
-                || grid.get(2).equals(grid.get(4)) && grid.get(4).equals(grid.get(6)) && grid.get(2).equals(currentPlayer)) {
-            System.out.println("The winner is " + currentPlayer);
+        if (grid.get(0).equals(grid.get(1)) && grid.get(1).equals(grid.get(2)) && !grid.get(0).equals(" ")
+                || grid.get(3).equals(grid.get(4)) && grid.get(4).equals(grid.get(5)) && !grid.get(3).equals(" ")
+                || grid.get(6).equals(grid.get(7)) && grid.get(7).equals(grid.get(8)) && !grid.get(6).equals(" ")
+                || grid.get(0).equals(grid.get(3)) && grid.get(3).equals(grid.get(6)) && !grid.get(0).equals(" ")
+                || grid.get(1).equals(grid.get(4)) && grid.get(4).equals(grid.get(7)) && !grid.get(1).equals(" ")
+                || grid.get(2).equals(grid.get(5)) && grid.get(5).equals(grid.get(8)) && !grid.get(2).equals(" ")
+                || grid.get(0).equals(grid.get(4)) && grid.get(4).equals(grid.get(8)) && !grid.get(0).equals(" ")
+                || grid.get(2).equals(grid.get(4)) && grid.get(4).equals(grid.get(6)) && !grid.get(2).equals(" ")) {
+            System.out.println("Game over!");
             return true;
         }
         return false;
+    }
+    
+    public static boolean isDraw(){
+        if (!wonByCurrentPlayer() && !grid.contains(" ")){
+            System.out.println("It's a draw!");
+            return true;    
+        }
+        return false;
+    }
+    
+    public static boolean gameEnd(){
+        return (wonByCurrentPlayer() || isDraw());
     }
 
     public static void takeTurn() {
