@@ -5,37 +5,36 @@
  */
 package noughtsandcrosses;
 
-
 /**
  *
  * @author alex.yates
  */
 public class Game {
-        /**
+
+    /**
      * Class variables used to hold the identity of the current player and the
      * current state of the grid.
      */
     private iPlayer currentPlayer;
     private iPlayer player1;
     private iPlayer player2;
-    
+
     /**
-     * Constuctor for Game objects.
-     * Initialises current player as "O" and uses 
+     * Constuctor for Game objects. Initialises current player as "O" and uses
      * the initialiseGrid() method to initialise grid.
      */
-    public Game(){
-        super();  
+    public Game() {
+        super();
         this.initialiseGrid();
-        player1 = new HumanPlayer("Alex", "X");
-        player2 = new HumanPlayer("Emma", "O");
+        player1 = new HumanPlayer(1);
+        player2 = new HumanPlayer(2);
         this.currentPlayer = this.player1;
     }
 
-    public iPlayer getCurrentPlayer(){
+    public iPlayer getCurrentPlayer() {
         return currentPlayer;
     }
-    
+
     /**
      * Initialises the playing grid to a blank slate. All values from 0 - 8 will
      * be set to " ".
@@ -46,7 +45,7 @@ public class Game {
             NoughtsAndCrosses.grid.add(" ");
         }
     }
-    
+
     /**
      * Swaps the current player for the next turn
      */
@@ -110,10 +109,9 @@ public class Game {
         }
 
         /**
-         * Logging the winner
-         * Note: this only works if you know the game has
+         * Logging the winner Note: this only works if you know the game has
          * been won by currentPlayer
-         */ 
+         */
         if (gameIsWon) {
             System.out.println("Game over! " + winner + " wins!");
         }

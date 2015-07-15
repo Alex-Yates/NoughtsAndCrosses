@@ -12,28 +12,52 @@ import java.io.*;
  * @author alex.yates
  */
 public class HumanPlayer implements iPlayer {
+
     /**
      * Instance variables
      */
     private String name;
     private String symbol;
-    
+
     /**
      * Constructor
+     *
      * @param playerName: The name of the player
-     * @param playerSymbol: The symbol the player will use for the game. e.g. "O" or "X"
+     * @param playerSymbol: The symbol the player will use for the game. e.g.
+     * "O" or "X"
      */
-    public HumanPlayer(String playerName, String playerSymbol){
+    public HumanPlayer(String playerName, String playerSymbol) {
         super();
         this.name = playerName;
         this.symbol = playerSymbol;
     }
-    
+
+    public HumanPlayer(int playerNumber) {
+        if (playerNumber != 1 && playerNumber != 2) {
+            playerNumber = 1;
+        }
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Please enter a name for player " + playerNumber);
+            String str = br.readLine();
+            this.name = str;
+        } catch (IOException e) {
+            //e.printStackTrace();
+            System.out.println(e);
+        }
+        if (playerNumber == 1) {
+            this.symbol = "X";
+        }
+        if (playerNumber == 2) {
+            this.symbol = "O";
+        }
+    }
+
     @Override
-    public String getName(){
+    public String getName() {
         return this.name;
     }
-    
+
     /**
      * Asks the next player where they would like to go. Then reads the input
      * from the command prompt and updates grid<> accordingly.
@@ -42,14 +66,14 @@ public class HumanPlayer implements iPlayer {
     public void takeTurn() {
         int move;
         boolean legalMove = false;
-        // Copied some of the code for this section from 
+            // Copied some of the code for this section from 
         // http://www.avajava.com/tutorials/lessons/
         // how-do-i-accept-text-input-in-a-console-application.html 
         try {
             while (legalMove == false) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                 System.out.println(this.name + "'s turn next:");
-                // I'm not sure why but without using line.separator
+                    // I'm not sure why but without using line.separator
                 // (below) there was no new line after:
                 // "Where would you like to go?"
                 String newLine = System.getProperty("line.separator");
@@ -81,5 +105,5 @@ public class HumanPlayer implements iPlayer {
             System.out.println(e);
         }
     }
-    
+
 }
