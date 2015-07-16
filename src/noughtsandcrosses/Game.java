@@ -31,6 +31,14 @@ public class Game {
         this.currentPlayer = this.player1;
     }
 
+    public iPlayer getPlayer1() {
+        return player1;
+    }
+
+    public iPlayer getPlayer2() {
+        return player2;
+    }
+
     public iPlayer getCurrentPlayer() {
         return currentPlayer;
     }
@@ -69,58 +77,6 @@ public class Game {
     }
 
     /**
-     * Checks to see whether either player has won the game and if so logs which
-     * player won.
-     *
-     * Also returns true if the game has been won and false otherwise.
-     *
-     * @return True if either player won. False if not.
-     */
-    private boolean isWon() {
-        boolean gameIsWon = false;
-        String winner;
-        winner = "";
-
-        //Determining if victory conditions are met
-        if (NoughtsAndCrosses.grid.get(0).equals(NoughtsAndCrosses.grid.get(1)) && NoughtsAndCrosses.grid.get(1).equals(NoughtsAndCrosses.grid.get(2)) && !NoughtsAndCrosses.grid.get(0).equals(" ")) {
-            gameIsWon = true;
-            winner = this.currentPlayer.getName();
-        } else if (NoughtsAndCrosses.grid.get(3).equals(NoughtsAndCrosses.grid.get(4)) && NoughtsAndCrosses.grid.get(4).equals(NoughtsAndCrosses.grid.get(5)) && !NoughtsAndCrosses.grid.get(3).equals(" ")) {
-            gameIsWon = true;
-            winner = this.currentPlayer.getName();
-        } else if (NoughtsAndCrosses.grid.get(6).equals(NoughtsAndCrosses.grid.get(7)) && NoughtsAndCrosses.grid.get(7).equals(NoughtsAndCrosses.grid.get(8)) && !NoughtsAndCrosses.grid.get(6).equals(" ")) {
-            gameIsWon = true;
-            winner = this.currentPlayer.getName();
-        } else if (NoughtsAndCrosses.grid.get(0).equals(NoughtsAndCrosses.grid.get(3)) && NoughtsAndCrosses.grid.get(3).equals(NoughtsAndCrosses.grid.get(6)) && !NoughtsAndCrosses.grid.get(0).equals(" ")) {
-            gameIsWon = true;
-            winner = this.currentPlayer.getName();
-        } else if (NoughtsAndCrosses.grid.get(1).equals(NoughtsAndCrosses.grid.get(4)) && NoughtsAndCrosses.grid.get(4).equals(NoughtsAndCrosses.grid.get(7)) && !NoughtsAndCrosses.grid.get(1).equals(" ")) {
-            gameIsWon = true;
-            winner = this.currentPlayer.getName();
-        } else if (NoughtsAndCrosses.grid.get(2).equals(NoughtsAndCrosses.grid.get(5)) && NoughtsAndCrosses.grid.get(5).equals(NoughtsAndCrosses.grid.get(8)) && !NoughtsAndCrosses.grid.get(2).equals(" ")) {
-            gameIsWon = true;
-            winner = this.currentPlayer.getName();
-        } else if (NoughtsAndCrosses.grid.get(0).equals(NoughtsAndCrosses.grid.get(4)) && NoughtsAndCrosses.grid.get(4).equals(NoughtsAndCrosses.grid.get(8)) && !NoughtsAndCrosses.grid.get(0).equals(" ")) {
-            gameIsWon = true;
-            winner = this.currentPlayer.getName();
-        } else if (NoughtsAndCrosses.grid.get(2).equals(NoughtsAndCrosses.grid.get(4)) && NoughtsAndCrosses.grid.get(4).equals(NoughtsAndCrosses.grid.get(6)) && !NoughtsAndCrosses.grid.get(2).equals(" ")) {
-            gameIsWon = true;
-            winner = this.currentPlayer.getName();
-        }
-
-        /**
-         * Logging the winner Note: this only works if you know the game has
-         * been won by currentPlayer
-         */
-        if (gameIsWon) {
-            System.out.println("Game over! " + winner + " wins!");
-        }
-
-        // Signalling whether the game is over
-        return gameIsWon;
-    }
-
-    /**
      * Returns true and logs if the game is a draw.
      *
      * Only intelligent enough to spot a draw if all 9 squares are full and no
@@ -129,7 +85,7 @@ public class Game {
      * @return True if the game is drawn. False if not.
      */
     private boolean isDraw() {
-        if (!isWon() && !NoughtsAndCrosses.grid.contains(" ")) {
+        if (!VictoryConditions.gameWon() && !NoughtsAndCrosses.grid.contains(" ")) {
             System.out.println("It's a draw!");
             return true;
         }
@@ -142,6 +98,6 @@ public class Game {
      * @return True if game finished
      */
     public boolean gameEnd() {
-        return (isWon() || isDraw());
+        return (VictoryConditions.gameWon() || isDraw());
     }
 }
