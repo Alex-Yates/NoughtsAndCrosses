@@ -81,7 +81,7 @@ public abstract class VictoryConditions {
         boolean gameWon = false;
         for (List vcSet : victoryConditions.values()) {
             if (vcSetComplete(vcSet)) {
-                gameWon = gameWon && vcSetComplete(vcSet);
+                gameWon = true;
             }
         }
         if (gameWon){
