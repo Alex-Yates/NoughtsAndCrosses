@@ -53,9 +53,31 @@ public class HumanPlayer implements iPlayer {
         }
     }
 
+    // Note this is duplicated in AIPlayer class. Should have used 
+    // Abstract class rather than interface
     @Override
     public String getName() {
         return this.name;
+    }
+    
+// Note this is duplicated in AIPlayer class. Should have used 
+    // Abstract class rather than interface
+    @Override
+    public String getSymbol(){
+        return this.symbol;
+    }
+    
+    // Note this is duplicated in AIPlayer class. Should have used 
+    // Abstract class rather than interface
+    @Override
+    public String getOpponentsSymbol(){
+        String opponentsSymbol;
+        if (this.symbol.equals("O")){
+            opponentsSymbol = "X";
+        } else {
+            opponentsSymbol = "O";
+        }
+        return opponentsSymbol;  
     }
 
     /**

@@ -10,8 +10,10 @@ package noughtsandcrosses;
  * @author alex.yates
  */
 public interface iPlayer {
+    
     public void takeTurn();
     public String getName();
-    
+    public String getSymbol();
+    public String getOpponentsSymbol();
     
 }

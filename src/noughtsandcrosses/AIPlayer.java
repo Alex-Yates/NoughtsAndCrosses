@@ -6,6 +6,7 @@
 package noughtsandcrosses;
 
 import java.io.*;
+import java.util.*;
 
 /**
  *
@@ -43,15 +44,42 @@ public class AIPlayer implements iPlayer {
         }
     }
 
+    // Note this is duplicated in AIPlayer class. Should have used 
+    // Abstract class rather than interface
     @Override
     public String getName() {
         return this.name;
     }
 
+// Note this is duplicated in AIPlayer class. Should have used 
+    // Abstract class rather than interface
+    @Override
+    public String getSymbol() {
+        return this.symbol;
+    }
+
+    // Note this is duplicated in AIPlayer class. Should have used 
+    // Abstract class rather than interface
+    @Override
+    public String getOpponentsSymbol() {
+        String opponentsSymbol;
+        if (this.symbol.equals("O")) {
+            opponentsSymbol = "X";
+        } else {
+            opponentsSymbol = "O";
+        }
+        return opponentsSymbol;
+    }
+
     @Override
     public void takeTurn() {
+        // Declaring a variable to hold the current best move
         int move;
+
+        // Logic to pick the best square
         move = arbitraryAvailableSquare();
+
+        // Making the move
         NoughtsAndCrosses.grid.set(move, this.symbol);
         System.out.println(this.name + " moves chooses square " + move + ":");
     }
@@ -93,9 +121,34 @@ public class AIPlayer implements iPlayer {
         if (NoughtsAndCrosses.grid.get(7).equals(" ")) {
             return 7;
         }
-        
+
         // If this point is reached all the squares are taken and
         // the game should already have ended.
         throw new IllegalStateException();
+    }
+
+    private int winningMoveAvailable() {
+        int winningMove= 9;
+        for (Map vcSet : VictoryConditions.victoryConditions.values()) {
+            // If the victory condition includes only empty spaces and this.symbol
+            if (!vcSet.containsValue(getOpponentsSymbol()) && 
+                        vcSet.containsValue(getOpponentsSymbol()) &&
+                        vcSet.containsValue(" ")){
+                int numOfSpacesLeft = 3;
+                for (String vcSymbol : vcSet.values){
+                    if (vcSymbol.equals(this.symbol)){
+                        numOfSpacesLeft--;
+                    }
+                    if (numOfSpacesLeft == 1){
+                        // Get the key for which value is " "
+                        winningMove = vcSet. // to be completed.
+                    }
+                }
+            
+            }     
+
+
+            }
+        }
     }
 }
