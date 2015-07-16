@@ -12,4 +12,6 @@ package noughtsandcrosses;
 public interface iPlayer {
     public void takeTurn();
     public String getName();
+    
+    
 }

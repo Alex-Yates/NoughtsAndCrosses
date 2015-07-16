@@ -5,6 +5,8 @@
  */
 package noughtsandcrosses;
 
+import java.io.*;
+
 /**
  *
  * @author alex.yates
@@ -26,8 +28,28 @@ public class Game {
     public Game() {
         super();
         this.initialiseGrid();
-        player1 = new HumanPlayer(1);
-        player2 = new HumanPlayer(2);
+        // Setting players as either human or AI
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Player1: Enter 1 for human or 2 for AI");
+            String p1 = br.readLine();
+            if (p1.equals("1")) {
+                player1 = new HumanPlayer(1);
+            } else {
+                player1 = new AIPlayer(1);
+            }
+            System.out.println("Player2: Enter 1 for human or 2 for AI");
+            String p2 = br.readLine();
+            if (p2.equals("1")) {
+                player2 = new HumanPlayer(2);
+            } else {
+                player2 = new AIPlayer(2);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        // Setting player1 as the current player to start
         this.currentPlayer = this.player1;
     }
 
