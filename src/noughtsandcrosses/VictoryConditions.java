@@ -21,8 +21,8 @@ public abstract class VictoryConditions {
     static List vc6set = new ArrayList();
     static List vc7set = new ArrayList();
     static List vc8set = new ArrayList();
-    static List victoryConditions = new ArrayList();
-            
+    static Map<Integer, List> victoryConditions = new HashMap<>();
+
     static void refreshVcSets() {
         vc1set.clear();
         vc2set.clear();
@@ -57,23 +57,36 @@ public abstract class VictoryConditions {
         vc8set.add(NoughtsAndCrosses.grid.get(2));
         vc8set.add(NoughtsAndCrosses.grid.get(4));
         vc8set.add(NoughtsAndCrosses.grid.get(6));
-        victoryConditions.add(vc1set);
-        victoryConditions.add(vc2set);
-        victoryConditions.add(vc3set);
-        victoryConditions.add(vc4set);
-        victoryConditions.add(vc5set);
-        victoryConditions.add(vc6set);
-        victoryConditions.add(vc7set);
-        victoryConditions.add(vc8set);     
+        victoryConditions.put(0, vc1set);
+        victoryConditions.put(1, vc2set);
+        victoryConditions.put(2, vc3set);
+        victoryConditions.put(3, vc4set);
+        victoryConditions.put(4, vc5set);
+        victoryConditions.put(5, vc6set);
+        victoryConditions.put(6, vc7set);
+        victoryConditions.put(7, vc8set);
     }
 
-static boolean vcSetComplete(List vc){
-    if (!vc.get(0).equals(vc.get(1)) || !vc.get(1).equals(vc.get(2))){
-        return false;
+    static boolean vcSetComplete(List vc) {
+        if (!vc.get(0).equals(vc.get(1)) || !vc.get(1).equals(vc.get(2))) {
+            return false;
+        } else if (vc.contains(" ")) {
+            return false;
+        }
+        return true;
     }
-    else if (vc.contains(" ")){
-        return false;
-    }
-    return true;
+
+    static boolean gameWon() {
+        refreshVcSets();
+        boolean gameWon = false;
+        for (List vcSet : victoryConditions.values()) {
+            if (vcSetComplete(vcSet)) {
+                gameWon = gameWon && vcSetComplete(vcSet);
+            }
+        }
+        if (gameWon){
+            System.out.println("Game over!");
+        }
+        return gameWon;
+    }    
 }
-
