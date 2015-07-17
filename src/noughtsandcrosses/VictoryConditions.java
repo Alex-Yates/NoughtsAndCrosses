@@ -21,7 +21,7 @@ public abstract class VictoryConditions {
     static Map<Integer, String> vc6set = new HashMap<>();
     static Map<Integer, String> vc7set = new HashMap<>();
     static Map<Integer, String> vc8set = new HashMap<>();
-    static Map<Integer, Map<Integer,String>> victoryConditions = new HashMap<>();
+    static Map<Integer, Map<Integer, String>> victoryConditions = new HashMap<>();
 
     static void refreshVcSets() {
         vc1set.clear();
@@ -84,9 +84,39 @@ public abstract class VictoryConditions {
                 gameWon = true;
             }
         }
-        if (gameWon){
+        if (gameWon) {
             System.out.println("Game over!");
         }
         return gameWon;
+    }
+
+    /**
+     * Returns an integer that references a winning move for
+     * a given player. If no winning move is available returns -1.
+     * @param player: the player for whom to test if there are any 
+     * winning moves available
+     * @return int to reference the winning move 
+     */
+    static int winningMoveAvailabeFor(iPlayer player) {
+        refreshVcSets();
+        int winningMove = -1;
+        for (Map vcSet : victoryConditions.values()) {
+            int numOfPlayerOwnedSquares = 0;
+            int numOfFreeSquares = 0;
+            int freeSquare = 0;
+            for (Object square : vcSet.keySet()) {
+                if (vcSet.get(square).equals(player.getSymbol())) {
+                    numOfPlayerOwnedSquares++;
+                }
+                if (vcSet.get(square).equals(" ")) {
+                    numOfFreeSquares++;
+                    freeSquare = (int) square;
+                }
+            }
+            if (numOfPlayerOwnedSquares == 2 && numOfFreeSquares == 1){
+                winningMove = freeSquare;
+            }
+        }
+        return winningMove;
     }
 }

@@ -9,12 +9,13 @@ import java.util.*;
  */
 public class NoughtsAndCrosses {
     public static List grid = new ArrayList();
+    public static Game game = new Game();
     /**
      * Orchestration method to execute the required steps to play a game of
      * noughts and crosses.
      */
     public static void main(String[] args) {
-        Game game = new Game();
+
         game.getCurrentPlayer().takeTurn();
         game.printGrid();
         while (!game.gameEnd()) {

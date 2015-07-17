@@ -79,6 +79,17 @@ public class AIPlayer implements iPlayer {
         // Logic to pick the best square
         move = arbitraryAvailableSquare();
 
+        // If the opposising player has an opportunity to win, block them
+        if (VictoryConditions.winningMoveAvailabeFor(getOpposingPlayer()) != -1){
+        move = VictoryConditions.winningMoveAvailabeFor(getOpposingPlayer());
+        }       
+        
+        // If this player can win with a single move, pick that square
+        if (VictoryConditions.winningMoveAvailabeFor(this) != -1){
+        move = VictoryConditions.winningMoveAvailabeFor(this);
+        }
+            
+            
         // Making the move
         NoughtsAndCrosses.grid.set(move, this.symbol);
         System.out.println(this.name + " moves chooses square " + move + ":");
@@ -126,29 +137,13 @@ public class AIPlayer implements iPlayer {
         // the game should already have ended.
         throw new IllegalStateException();
     }
-
-    private int winningMoveAvailable() {
-        int winningMove= 9;
-        for (Map vcSet : VictoryConditions.victoryConditions.values()) {
-            // If the victory condition includes only empty spaces and this.symbol
-            if (!vcSet.containsValue(getOpponentsSymbol()) && 
-                        vcSet.containsValue(getOpponentsSymbol()) &&
-                        vcSet.containsValue(" ")){
-                int numOfSpacesLeft = 3;
-                for (String vcSymbol : vcSet.values){
-                    if (vcSymbol.equals(this.symbol)){
-                        numOfSpacesLeft--;
-                    }
-                    if (numOfSpacesLeft == 1){
-                        // Get the key for which value is " "
-                        winningMove = vcSet. // to be completed.
-                    }
-                }
-            
-            }     
-
-
-            }
+    
+    private iPlayer getOpposingPlayer(){
+        if (this.symbol.equals("X")){
+            return NoughtsAndCrosses.game.getPlayer2();
         }
+        else return NoughtsAndCrosses.game.getPlayer1();
     }
+
+
 }
