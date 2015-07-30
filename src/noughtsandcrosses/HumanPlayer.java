@@ -11,13 +11,9 @@ import java.io.*;
  *
  * @author alex.yates
  */
-public class HumanPlayer implements iPlayer {
+public class HumanPlayer extends Player {
 
-    /**
-     * Instance variables
-     */
-    private String name;
-    private String symbol;
+
 
     /**
      * Constructor
@@ -28,8 +24,8 @@ public class HumanPlayer implements iPlayer {
      */
     public HumanPlayer(String playerName, String playerSymbol) {
         super();
-        this.name = playerName;
-        this.symbol = playerSymbol;
+        this.setName(playerName);
+        this.setSymbol(playerSymbol);
     }
 
     public HumanPlayer(int playerNumber) {
@@ -40,45 +36,21 @@ public class HumanPlayer implements iPlayer {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Please enter a name for player " + playerNumber);
             String str = br.readLine();
-            this.name = str;
+            this.setName(str);
         } catch (IOException e) {
             //e.printStackTrace();
             System.out.println(e);
         }
         if (playerNumber == 1) {
-            this.symbol = "X";
+            this.setSymbol("X");
         }
         if (playerNumber == 2) {
-            this.symbol = "O";
+            this.setSymbol("O");
         }
     }
 
-    // Note this is duplicated in AIPlayer class. Should have used 
-    // Abstract class rather than interface
-    @Override
-    public String getName() {
-        return this.name;
-    }
-    
-// Note this is duplicated in AIPlayer class. Should have used 
-    // Abstract class rather than interface
-    @Override
-    public String getSymbol(){
-        return this.symbol;
-    }
-    
-    // Note this is duplicated in AIPlayer class. Should have used 
-    // Abstract class rather than interface
-    @Override
-    public String getOpponentsSymbol(){
-        String opponentsSymbol;
-        if (this.symbol.equals("O")){
-            opponentsSymbol = "X";
-        } else {
-            opponentsSymbol = "O";
-        }
-        return opponentsSymbol;  
-    }
+
+
 
     /**
      * Asks the next player where they would like to go. Then reads the input
@@ -88,18 +60,18 @@ public class HumanPlayer implements iPlayer {
     public void takeTurn() {
         int move;
         boolean legalMove = false;
-            // Copied some of the code for this section from 
+        // Copied some of the code for this section from 
         // http://www.avajava.com/tutorials/lessons/
         // how-do-i-accept-text-input-in-a-console-application.html 
         try {
             while (legalMove == false) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                System.out.println(this.name + "'s turn next:");
+                System.out.println(this.getName() + "'s turn next:");
                     // I'm not sure why but without using line.separator
                 // (below) there was no new line after:
                 // "Where would you like to go?"
                 String newLine = System.getProperty("line.separator");
-                System.out.print(this.name + " where would you like to go?" + newLine);
+                System.out.print(this.getName() + " where would you like to go?" + newLine);
                 System.out.println(" 0 | 1 | 2 ");
                 System.out.println("---+---+---");
                 System.out.println(" 3 | 4 | 5 ");
@@ -112,7 +84,7 @@ public class HumanPlayer implements iPlayer {
                         || str.equals("6") || str.equals("7") || str.equals("8")) {
                     move = Integer.parseInt(str);
                     if (NoughtsAndCrosses.grid.get(move).equals(" ")) {
-                        NoughtsAndCrosses.grid.set(move, this.symbol);
+                        NoughtsAndCrosses.grid.set(move, this.getSymbol());
                         legalMove = true;
                     } else {
                         System.out.println("The space must be free!");

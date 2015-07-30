@@ -12,15 +12,12 @@ import java.util.*;
  *
  * @author alex.yates
  */
-public class AIPlayer implements iPlayer {
-
-    private String name;
-    private String symbol;
+public class AIPlayer extends Player{
 
     public AIPlayer(String playerName, String playerSymbol) {
         super();
-        this.name = playerName;
-        this.symbol = playerSymbol;
+        this.setName(playerName);
+        this.setSymbol(playerSymbol);
     }
 
     public AIPlayer(int playerNumber) {
@@ -31,44 +28,17 @@ public class AIPlayer implements iPlayer {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Please enter a name for player " + playerNumber);
             String str = br.readLine();
-            this.name = str;
+            this.setName(str);
         } catch (IOException e) {
             //e.printStackTrace();
             System.out.println(e);
         }
         if (playerNumber == 1) {
-            this.symbol = "X";
+            this.setSymbol("X");
         }
         if (playerNumber == 2) {
-            this.symbol = "O";
+            this.setSymbol("O");
         }
-    }
-
-    // Note this is duplicated in AIPlayer class. Should have used 
-    // Abstract class rather than interface
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-// Note this is duplicated in AIPlayer class. Should have used 
-    // Abstract class rather than interface
-    @Override
-    public String getSymbol() {
-        return this.symbol;
-    }
-
-    // Note this is duplicated in AIPlayer class. Should have used 
-    // Abstract class rather than interface
-    @Override
-    public String getOpponentsSymbol() {
-        String opponentsSymbol;
-        if (this.symbol.equals("O")) {
-            opponentsSymbol = "X";
-        } else {
-            opponentsSymbol = "O";
-        }
-        return opponentsSymbol;
     }
 
     @Override
@@ -91,8 +61,8 @@ public class AIPlayer implements iPlayer {
             
             
         // Making the move
-        NoughtsAndCrosses.grid.set(move, this.symbol);
-        System.out.println(this.name + " moves chooses square " + move + ":");
+        NoughtsAndCrosses.grid.set(move, this.getSymbol());
+        System.out.println(this.getName() + " chooses square " + move + ":");
     }
 
     /**
@@ -138,12 +108,7 @@ public class AIPlayer implements iPlayer {
         throw new IllegalStateException();
     }
     
-    private iPlayer getOpposingPlayer(){
-        if (this.symbol.equals("X")){
-            return NoughtsAndCrosses.game.getPlayer2();
-        }
-        else return NoughtsAndCrosses.game.getPlayer1();
-    }
+
 
 
 }

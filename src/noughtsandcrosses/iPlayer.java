@@ -13,7 +13,10 @@ public interface iPlayer {
     
     public void takeTurn();
     public String getName();
+    public void setName(String str);
     public String getSymbol();
+    public void setSymbol(String str);
     public String getOpponentsSymbol();
+    public iPlayer getOpposingPlayer();
     
 }
